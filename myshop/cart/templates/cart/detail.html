@@ -5,17 +5,14 @@
 
 {% block content %}
 <script>
-    // Запретить прокрутку страницы по вертикали
     function disablePageScroll() {
         document.body.style.overflowY = "hidden";
     }
-    
-    // Включить прокрутку страницы
+
     function enablePageScroll() {
         document.body.style.overflowY = "auto";
     }
-    
-    // Вызвать функцию для запрета прокрутки страницы при загрузке
+
     window.addEventListener("load", disablePageScroll);
 </script>
 

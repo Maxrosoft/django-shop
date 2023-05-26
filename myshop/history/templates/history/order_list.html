@@ -1,0 +1,42 @@
+{% extends "myshop/base.html" %}
+{% load static %}
+
+{% block title %}History{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Order History</h1>
+
+    <form action="." method="post">
+        <div class="search-form">
+            {{ form.as_p }}
+            <button type="submit" class="search-button">Search</button>
+            {% csrf_token %}
+        </div>
+    </form>
+
+    {% if orders %}
+        <h2 class="found-orders-title">Found Orders:</h2>
+        <table class="order-table">
+            <thead>
+                <tr>
+                    <th class="order-header">Order ID</th>
+                    <th class="order-header">Name</th>
+                    <th class="order-header">Address</th>
+                    <th class="order-header">Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr class="order-row">
+                        <td class="order-data">{{ order.id }}</td>
+                        <td class="order-data">{{ order.name }}</td>
+                        <td class="order-data">{{ order.address }}</td>
+                        <td class="order-data">{{ order.created }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="no-orders">No orders found.</p>
+    {% endif %}
+{% endblock %}
