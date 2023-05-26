@@ -1,0 +1,46 @@
+{% extends "myshop/base.html" %}
+{% load static %}
+
+{% block title %}Coupons{% endblock %}
+
+{% block content %}
+    <div class="coupon-container">
+        <h1 class="coupon-h1">Coupon List</h1>
+        <table class="coupon-table">
+            <tr>
+                <th class="coupon-th-td coupon-th">Code</th>
+                <th class="coupon-th-td coupon-th">Valid From</th>
+                <th class="coupon-th-td coupon-th">Valid To</th>
+                <th class="coupon-th-td coupon-th">Discount</th>
+                <th class="coupon-th-td coupon-th">Copy</th>
+            </tr>
+            {% for coupon in coupons %}
+            <tr>
+                <td class="code coupon-th-td">{{ coupon.code }}</td>
+                <td class="validity coupon-th-td">{{ coupon.valid_from }}</td>
+                <td class="validity coupon-th-td">{{ coupon.valid_to }}</td>
+                <td class="discount coupon-th-td">{{ coupon.discount }}%</td>
+                <td class="copy-button coupon-th-td">
+                    <button onclick="copyCouponCode(this, '{{ coupon.code }}')">Copy</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <script>
+        function copyCouponCode(button, code) {
+            const el = document.createElement('textarea');
+            el.value = code;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            button.parentNode.classList.add('button-clicked');
+            button.innerHTML = 'Copied';
+            setTimeout(function() {
+                button.parentNode.classList.remove('button-clicked');
+                button.innerHTML = 'Copy';
+            }, 1500);
+        }
+    </script>
+{% endblock %}

@@ -6,6 +6,7 @@ from .cart import Cart
 from .forms import CartAddProductForm
 from .models import OrderItem
 from .forms import OrderCreateForm
+from coupons.forms import CouponApplyForm
 
 
 @require_POST
@@ -32,7 +33,11 @@ def cart_detail(request):
     if request.method == 'POST':
         order_form = OrderCreateForm(request.POST)
         if order_form.is_valid():
-            order = order_form.save()
+            order = order_form.save(commit=False)
+            if cart.coupon:
+                order.coupon = cart.coupon
+                order.discount = cart.coupon.discount
+            order.save()
             for item in cart:
                 OrderItem.objects.create(
                     order=order,
@@ -47,9 +52,10 @@ def cart_detail(request):
         item['update_quantity_form'] = CartAddProductForm(
             initial={'quantity': item['quantity'], 'update': True}
         )
+    coupon_apply_form = CouponApplyForm()
 
     return render(
         request,
         'cart/detail.html',
-        {'cart': cart, 'form': order_form}
+        {'cart': cart, 'form': order_form, 'coupon_apply_form': coupon_apply_form}
     )
