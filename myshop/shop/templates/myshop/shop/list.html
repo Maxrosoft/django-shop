@@ -8,11 +8,11 @@
         <h3>Shops</h3>
         <ul id="shop-list">
             <li {% if not shop %}class="selected"{% endif %}>
-                <a {% if not first %}{% if shop.slug == s.slug %}href="{% url "shop:product_list" %}" {% elif shop.slug != s.slug %} href="#" {% endif %}{% endif %}>All</a>
+                <a {% if not first %}{% if shop.slug == s.slug %}href="{% url "shop:product_list" %}" {% elif shop.slug != s.slug %} href="#" class="disabled"{% endif %}{% endif %}>All</a>
             </li>
             {% for s in shops %}
                 <li {% if shop.slug == s.slug %}class="selected"{% endif %}>
-                    <a {% if first %}href="{{ s.get_absolute_url }}"{% else %}{% if shop.slug == s.slug %} href="{{ s.get_absolute_url }}" {% elif shop.slug != s.slug %} href="#" {% endif %}{% endif %}>
+                    <a {% if first %}href="{{ s.get_absolute_url }}"{% else %}{% if shop.slug == s.slug %} href="{{ s.get_absolute_url }}" {% elif shop.slug != s.slug %} href="#" class="disabled" {% endif %}{% endif %}>
                         {{ s.name }}
                     </a>
                 </li>
