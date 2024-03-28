@@ -1,4 +1,4 @@
-# eliftech-project
+# django-shop
 
 This repository contains a test task for admission to the course by ElifTech.
 
